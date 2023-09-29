@@ -10,5 +10,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: 'https://hpozza.github.io/'
+  base: '/hpozza.github.io/'
 })
