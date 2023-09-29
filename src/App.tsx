@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button } from './components/ui/button'
 import { Linkedin } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from './components/ui/card';
 import { PokeCard } from './shared/PokeCard';
 import { BarChart } from './shared/charts/BarChart';
 const API_URL = 'https://pokeapi.co/api/v2/pokemon'
@@ -56,12 +56,12 @@ export function App() {
     setData(data);
   }
 
-  function getPokeId(url: string) {
+/*   function getPokeId(url: string) {
     const path = new URL(url).pathname
     const id = path.split("/api/v2/pokemon/")
     const pokeId = id[1].split('/')[0]
     console.log(pokeId)
-  }
+  } */
 
   return (
     <>
@@ -105,7 +105,7 @@ export function App() {
           <Card>
             <CardHeader>Select Pokemon</CardHeader>
             <CardContent className='flex flex-col mr-1 gap-1'>
-              {pokemonList?.map((d: any, i: number) => {
+              {pokemonList?.map((d: any) => {
                 return <h1 onClick={() => setSelectedPokemon(d.name)} className='flex pl-2 cursor-pointer justify-between hover:bg-sky-700'>{d.name}</h1>
               })}
             </CardContent>
