@@ -1,4 +1,4 @@
-import { AxisBottom } from '@visx/axis'
+import { AxisBottom, AxisLeft } from '@visx/axis'
 import { scaleBand, scaleLinear } from '@visx/scale'
 import { Bar } from '@visx/shape'
 import { Text } from '@visx/text'
@@ -24,8 +24,6 @@ export function BarChart({ pokemonData }: any) {
         range: [0, 450]
     })
 
-    console.log(12 + yScale.bandwidth())
-
     return (
 
         <>
@@ -34,34 +32,42 @@ export function BarChart({ pokemonData }: any) {
                     return (
                         <>
                             <Bar
-                                key={i + d.stat!.name}
+                            key={i + d.stat!.name}
+                            y={yScale(d.stat!.name)}
+                            x={0}
+                            width={xScale(255)}
+                            height={yScale.bandwidth()}
+                            fill='none'
+                            stroke='#4A0F9E'
+                            />
+                            <Bar
+                                key={i+1 + d.stat!.name}
                                 y={yScale(d.stat!.name)}
-                                x={30}
+                                x={0}
                                 width={xScale(d.base_stat)}
                                 height={yScale.bandwidth()}
-                                fill='#fafafa'
+                                fill='#A967E4'
                             />
                             <Text
                                 y={yScale(d.stat.name)! + yScale.bandwidth() / 2}
-                                x={450}
-                                fill='blue'
+                                x={xScale(253)}
+                                fill='white'
+                                textAnchor='end'
                                 verticalAnchor='middle'
                             >
                                 {d.base_stat}
                             </Text>
+                            <Text
+                                y={yScale(d.stat.name)! + yScale.bandwidth() / 2}
+                                x={0}
+                                fill='white'
+                                verticalAnchor='middle'
+                            >
+                                {d.stat.name}
+                            </Text>
                         </>
                     )
                 }) : null}
-                <AxisBottom
-                    tickLabelProps={{
-                        fill: "#fff",
-                        fontSize: 11,
-                        textAnchor: 'middle',
-                    }}
-                    top={300}
-                    hideAxisLine={true}
-                    scale={xScale}
-                    hideTicks={true} />
             </svg>
 
         </>

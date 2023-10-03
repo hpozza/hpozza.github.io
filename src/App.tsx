@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Button } from './components/ui/button'
-import { Linkedin } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader } from './components/ui/card';
+import { Linkedin, Search } from 'lucide-react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './components/ui/card';
 import { PokeCard } from './shared/PokeCard';
 import { BarChart } from './shared/charts/BarChart';
+import { InputIcon } from '@radix-ui/react-icons';
+import { Input } from './components/ui/input';
 const API_URL = 'https://pokeapi.co/api/v2/pokemon'
 
 export function App() {
@@ -13,6 +15,7 @@ export function App() {
   const [pokemonData, setData] = useState<any>();
   const [nextPage, setNextPage] = useState<string>('');
   const [previousPage, setPreviousPage] = useState<string>('');
+  const [searchPoke, setSearchPoke] = useState<string>('')
 
   useEffect(() => {
     getPokemonList();
@@ -40,8 +43,6 @@ export function App() {
       setPokemonList(data.results);
       setNextPage(data.next);
       setPreviousPage(data.previous);
-
-      console.log(data)
     }
 
     catch (err) {
@@ -52,16 +53,22 @@ export function App() {
   async function getPokemon(pokemon: any) {
     const response = await fetch(`${API_URL}/${pokemon}`)
     const data = await response.json();
-    console.log(data)
     setData(data);
   }
 
-/*   function getPokeId(url: string) {
-    const path = new URL(url).pathname
-    const id = path.split("/api/v2/pokemon/")
-    const pokeId = id[1].split('/')[0]
-    console.log(pokeId)
-  } */
+  async function getPokemonBySearch() {
+    const response = await fetch(`${API_URL}/${searchPoke}`)
+    const data = await response.json();
+    setData(data)
+
+  }
+
+  /*   function getPokeId(url: string) {
+      const path = new URL(url).pathname
+      const id = path.split("/api/v2/pokemon/")
+      const pokeId = id[1].split('/')[0]
+      console.log(pokeId)
+    } */
 
   return (
     <>
@@ -86,7 +93,7 @@ export function App() {
 
         <main className='flex flex-row gap-8 justify-between p-6'>
 
-          <div className='flex flex-col items-start gap-4 justify-between'>
+          <div className='flex flex-row items-start gap-20 justify-start'>
             {/* <Select onValueChange={(e: any) => setSelectedPokemon(e)} >
               <SelectTrigger>Select Pokemon</SelectTrigger>
               <SelectContent>
@@ -96,17 +103,35 @@ export function App() {
               </SelectContent>
             </Select> */}
 
-            {pokemonData ? <PokeCard pokemonData={pokemonData}/> : null}
-            {pokemonData ? <BarChart pokemonData={pokemonData}/> : null}        
+            {pokemonData ? <PokeCard pokemonData={pokemonData} /> : null}
+            {pokemonData ? <BarChart pokemonData={pokemonData} /> : null}
 
 
           </div>
 
           <Card>
-            <CardHeader>Select Pokemon</CardHeader>
+            <CardHeader className='gap-6'>
+              <CardTitle>Select a Pokemon</CardTitle>
+              <div className='flex gap-2'>
+                <Input
+                  placeholder='or search one'
+                  onChange={(e: any) => setSearchPoke(e.target.value)}
+                  onKeyDown={event => {
+                    if (event.key === 'Enter') {
+                      getPokemonBySearch()
+                    }
+                  }} />
+                <Button
+                  onClick={getPokemonBySearch}
+                >
+                  <Search className='mr-2' />
+                  Search
+                </Button>
+              </div>
+            </CardHeader>
             <CardContent className='flex flex-col mr-1 gap-1'>
               {pokemonList?.map((d: any) => {
-                return <h1 onClick={() => setSelectedPokemon(d.name)} className='flex pl-2 cursor-pointer justify-between hover:bg-sky-700'>{d.name}</h1>
+                return <h1 onClick={() => setSelectedPokemon(d.name)} className='flex pl-2 cursor-pointer justify-between hover:bg-sky-700 rounded-sm'>{d.name}</h1>
               })}
             </CardContent>
             <CardFooter className='flex gap-4 justify-between'>
