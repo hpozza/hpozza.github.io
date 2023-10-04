@@ -4,8 +4,8 @@ import { Linkedin, Search } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './components/ui/card';
 import { PokeCard } from './shared/PokeCard';
 import { BarChart } from './shared/charts/BarChart';
-import { InputIcon } from '@radix-ui/react-icons';
 import { Input } from './components/ui/input';
+import { BubbleChart } from './shared/charts/BubbleChart';
 const API_URL = 'https://pokeapi.co/api/v2/pokemon'
 
 export function App() {
@@ -104,7 +104,10 @@ export function App() {
             </Select> */}
 
             {pokemonData ? <PokeCard pokemonData={pokemonData} /> : null}
-            {pokemonData ? <BarChart pokemonData={pokemonData} /> : null}
+            <div className='flex flex-col gap-6' >
+              {pokemonData ? <BarChart pokemonData={pokemonData} /> : null}
+              {pokemonData ? <BubbleChart pokemonData={pokemonData} /> : null}
+            </div>
 
 
           </div>

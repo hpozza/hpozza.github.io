@@ -1,15 +1,17 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@radix-ui/react-select'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function PokeCard({ pokemonData }: any) {
-    console.log('pokestats', pokemonData)
+    const [isLoading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (pokemonData) {
             getEvolution();
         }
     }, [pokemonData])
+
+    let abilities: any[] = []
+    let moves: any[] = [];
 
     async function getEvolution() {
         const id = pokemonData.id;
@@ -19,8 +21,14 @@ export function PokeCard({ pokemonData }: any) {
         const rPo = await fetch(`https://pokeapi.co/api/v2/ability/${id}`)
         const pokemon = await rPo.json()
 
-        console.log('po', pokemon)
+        for (let i = 0; i < pokemonData?.abilities?.length; i++) {
+            const res = await fetch(pokemonData.abilities[i].ability.url)
+            const data = await res.json();
+            abilities.push(data);
+            
+        }
 
+        console.log('moves', moves)
         console.log('ev', evolutions);
     }
 
@@ -44,11 +52,10 @@ export function PokeCard({ pokemonData }: any) {
         steel: '#B7B7CE',
         fairy: '#D685AD',
     }
-    console.log('adasdsa', colorTypes.poison)
 
     return (
         <>
-            <Card className='flex flex-col items-center'>
+            <Card className='flex flex-col'>
                 <CardHeader className='w-auto'>
                     <img className='max-h-60 w-auto' src={pokemonData.sprites.other["official-artwork"].front_default}></img>
                     <CardTitle className='flex text-xl items-center justify-center' >{pokemonData ? pokemonData.name : null}</CardTitle>
@@ -61,13 +68,14 @@ export function PokeCard({ pokemonData }: any) {
                                     paddingLeft: 4,
                                     paddingRight: 4,
                                     border: '1px solid white',
-                                    borderRadius: 10
+                                    borderRadius: 10,
+                                    marginRight: 5
                                 }} >{d.type.name}</span>
                             )
                         })}
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='flex flex-col justify-start'>
                     <h1>
                         heigth: {`${pokemonData.height / 10} m`}
                     </h1>
