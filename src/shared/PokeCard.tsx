@@ -56,8 +56,8 @@ export function PokeCard({ pokemonData }: any) {
     return (
         <>
             <Card className='flex flex-col'>
-                <CardHeader className='w-auto'>
-                    <img className='max-h-60 w-auto' src={pokemonData.sprites.other["official-artwork"].front_default}></img>
+                <CardHeader>
+                    <img className='h-60 w-auto' src={pokemonData.sprites.other["official-artwork"].front_default}></img>
                     <CardTitle className='flex text-xl items-center justify-center' >{pokemonData ? pokemonData.name : null}</CardTitle>
                     <CardDescription className='flex gap-1 items-center justify-center'>
                         {pokemonData.types.map((d: any) => {

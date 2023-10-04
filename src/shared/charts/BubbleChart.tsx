@@ -1,13 +1,24 @@
+import { Tooltip, TooltipProvider } from '@/components/ui/tooltip';
+import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
 import { scaleLinear } from '@visx/scale';
 import { Circle } from '@visx/shape';
 import { Text } from '@visx/text';
-import { Loader2, X } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react'
 
 export function BubbleChart({ pokemonData }: any) {
     const [isLoading, setLoading] = useState<boolean>(true);
     const [moves, setMoves] = useState<any>();
     const [xMax, setXMax] = useState(250);
+    const [width, height] = [450, 450]
+    const margin = {
+        left: 30,
+        right: 20,
+        top: 50,
+        bottom: 20
+    }
+
+    const [innerHeight, innerWidth] = [height - margin.top - margin.bottom, width - margin.left - margin.right]
 
     useEffect(() => {
         getMoves()
@@ -41,12 +52,12 @@ export function BubbleChart({ pokemonData }: any) {
 
     let xScale = scaleLinear({
         domain: [0, xMax],
-        range: [0, 400]
+        range: [0, innerWidth]
     });
 
     let yScale = scaleLinear({
         domain: [0, 40],
-        range: [0, 400]
+        range: [0, innerHeight]
     })
 
     let rScale = scaleLinear({
@@ -85,8 +96,12 @@ export function BubbleChart({ pokemonData }: any) {
                 </div>
                 :
                 <div className='flex flex-col gap-4'>
-                    <svg height={450} width={450}>
-                        <g transform={`translate(25, 0)`}>
+                    <svg height={height} width={width}>
+                        <Text x={0} y={10} fill='white'>Moves Set</Text>
+                        <Text x={width / 2} y={height} textAnchor='middle' fill='white'>Power</Text>
+                        <Text x={10} y={height / 2} textAnchor='middle' angle={270} fill='white'>Power Points</Text>
+
+                        <g transform={`translate(50, 20)`}>
                             {moves.length > 1 ? moves?.map((d: any, i: number) => {
                                 return (
                                     <>
@@ -103,14 +118,16 @@ export function BubbleChart({ pokemonData }: any) {
                             }) : null}
                         </g>
                     </svg>
-                    {moves.sort((a: any, b: any) => b - a).filter((d: any, i: number) => i < 11).map((d: any) => {
-                        return (
-                            <span>
-                                {d.name}
-                            </span>
-                        )
-                    })}
-
+                    <h1>Top Moves (by Power)</h1>
+                    <div className='flex flex-col text-sm text-muted-foreground'>
+                        {moves.sort((a: any, b: any) => b - a).filter((d: any, i: number) => i < 11).map((d: any) => {
+                            return (
+                                <span className='hover:bg-violet-500'>
+                                    {d.name}
+                                </span>
+                            )
+                        })}
+                    </div>
                 </div>
             }
         </>

@@ -27,7 +27,7 @@ export function BarChart({ pokemonData }: any) {
 
         <>
             <svg height={200} width={500}>
-            <Text x={0} y={18} fill='white'>Base Stats:</Text>
+            <Text x={0} y={18} fill='white'>Base Stats</Text>
                 {data ? data.map((d: Stats, i: number) => {
                     return (
                         <>

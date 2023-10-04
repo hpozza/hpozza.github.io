@@ -93,7 +93,7 @@ export function App() {
 
         <main className='flex flex-row gap-8 justify-between p-6'>
 
-          <div className='flex flex-row items-start gap-20 justify-start'>
+          {/* <div className='flex flex-row items-start gap-20 justify-start'> */}
             {/* <Select onValueChange={(e: any) => setSelectedPokemon(e)} >
               <SelectTrigger>Select Pokemon</SelectTrigger>
               <SelectContent>
@@ -102,17 +102,19 @@ export function App() {
                 })}
               </SelectContent>
             </Select> */}
+            <div className='items-start'>
 
             {pokemonData ? <PokeCard pokemonData={pokemonData} /> : null}
-            <div className='flex flex-col gap-6' >
+            </div>
+            <div className='flex flex-col gap-10' >
               {pokemonData ? <BarChart pokemonData={pokemonData} /> : null}
               {pokemonData ? <BubbleChart pokemonData={pokemonData} /> : null}
             </div>
 
 
-          </div>
+          {/* </div> */}
 
-          <Card>
+          <Card className='items-start'>
             <CardHeader className='gap-6'>
               <CardTitle>Select a Pokemon</CardTitle>
               <div className='flex gap-2'>
@@ -137,7 +139,7 @@ export function App() {
                 return <h1 onClick={() => setSelectedPokemon(d.name)} className='flex pl-2 cursor-pointer justify-between hover:bg-sky-700 rounded-sm'>{d.name}</h1>
               })}
             </CardContent>
-            <CardFooter className='flex gap-4 justify-between'>
+            <CardFooter className='gap-4 justify-between'>
               <Button onClick={goToPrevPage}>Previous</Button>
               <Button onClick={goToNextPage}>Next</Button>
             </CardFooter>
