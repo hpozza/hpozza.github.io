@@ -1,12 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export function PokeCard({ pokemonData }: any) {
-    const [isLoading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (pokemonData) {
             getEvolution();
+            console.log(pokemonData)
         }
     }, [pokemonData])
 
@@ -14,22 +14,12 @@ export function PokeCard({ pokemonData }: any) {
     let moves: any[] = [];
 
     async function getEvolution() {
-        const id = pokemonData.id;
-        const rEv = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}`)
-        const evolutions = await rEv.json();
 
-        const rPo = await fetch(`https://pokeapi.co/api/v2/ability/${id}`)
-        const pokemon = await rPo.json()
-
-        for (let i = 0; i < pokemonData?.abilities?.length; i++) {
-            const res = await fetch(pokemonData.abilities[i].ability.url)
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${pokemonData.name}/`)
             const data = await res.json();
-            abilities.push(data);
             
-        }
 
-        console.log('moves', moves)
-        console.log('ev', evolutions);
+        console.log('evo', data)
     }
 
     const colorTypes: any = {

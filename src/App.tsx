@@ -72,7 +72,7 @@ export function App() {
 
   return (
     <>
-      <div>
+      <div className=''>
         <div className='px-6 py-3 flex items-center justify-between border-b'>
           <h1 className='text-xl font-bold'>Pokemon Dahsboard</h1>
 
@@ -94,7 +94,7 @@ export function App() {
         <main className='flex flex-row gap-8 justify-between p-6'>
 
           {/* <div className='flex flex-row items-start gap-20 justify-start'> */}
-            {/* <Select onValueChange={(e: any) => setSelectedPokemon(e)} >
+          {/* <Select onValueChange={(e: any) => setSelectedPokemon(e)} >
               <SelectTrigger>Select Pokemon</SelectTrigger>
               <SelectContent>
                 {pokemonList?.map((d: any, i: number) => {
@@ -102,14 +102,14 @@ export function App() {
                 })}
               </SelectContent>
             </Select> */}
-            <div className='items-start'>
+          <div className='items-start'>
 
             {pokemonData ? <PokeCard pokemonData={pokemonData} /> : null}
-            </div>
-            <div className='flex flex-col gap-10' >
-              {pokemonData ? <BarChart pokemonData={pokemonData} /> : null}
-              {pokemonData ? <BubbleChart pokemonData={pokemonData} /> : null}
-            </div>
+          </div>
+          <div className='flex flex-col gap-10' >
+            {pokemonData ? <BarChart pokemonData={pokemonData} /> : null}
+            {pokemonData ? <BubbleChart pokemonData={pokemonData} /> : null}
+          </div>
 
 
           {/* </div> */}
@@ -148,6 +148,10 @@ export function App() {
 
 
         </main>
+
+        <footer className='absolute bottom-0 left-0 px-2 text-gray-500'>
+          tools used: react, vite, typescript, d3.js, visx, shadcn/ui, tailwind
+        </footer>
       </div>
     </>
   )

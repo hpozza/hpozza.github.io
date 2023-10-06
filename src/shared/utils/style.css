@@ -1,0 +1,11 @@
+.tooltipDiv {
+    background-color: #6225C5;
+    font-family: Roboto;
+    color: #fff;
+    display: flex;
+    margin-top: 2px;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 10px;
+    opacity: 0.9
+}
